@@ -233,6 +233,9 @@ SRCDIRS		+=	external/cairo-1.17.2
 INCDIRS		+=	external/chipmunk-7.0.2/include
 SRCDIRS		+=	external/chipmunk-7.0.2/src
 
+INCDIRS		+=	external/nuklear-4.01.0
+SRCDIRS		+=	external/nuklear-4.01.0
+
 #
 # You shouldn't need to change anything below this point.
 #
