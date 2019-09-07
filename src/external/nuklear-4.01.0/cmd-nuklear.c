@@ -6,15 +6,6 @@
 #include <command/command.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
-#define NK_IMPLEMENTATION
-#define NK_INCLUDE_FIXED_TYPES
-#define NK_INCLUDE_STANDARD_IO
-#define NK_INCLUDE_STANDARD_VARARGS
-#define NK_INCLUDE_DEFAULT_ALLOCATOR
-#define NK_INCLUDE_FONT_BAKING
-#define NK_INCLUDE_DEFAULT_FONT
-#define NK_INCLUDE_SOFTWARE_FONT
 #include "nuklear.h"
 
 static void calculator(struct nk_context *ctx)
@@ -1787,10 +1778,10 @@ static int do_nuklear(int argc, char ** argv)
 	struct xui_context_t * ctx = xui_context_alloc(NULL, NULL);
 	struct event_t e;
 
-    //set_style(&rawfb->ctx, THEME_WHITE);
-    //set_style(&rawfb->ctx, THEME_RED);
-    //set_style(&rawfb->ctx, THEME_BLUE);
-    //set_style(&rawfb->ctx, THEME_DARK);
+    //set_style(&ctx->nkctx, THEME_WHITE);
+    //set_style(&ctx->nkctx, THEME_RED);
+    //set_style(&ctx->nkctx, THEME_BLUE);
+    set_style(&ctx->nkctx, THEME_DARK);
 
 	while(1)
 	{
