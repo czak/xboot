@@ -6,6 +6,7 @@
 #include <command/command.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
 #include "nuklear.h"
 
 static void calculator(struct nk_context *ctx)
@@ -1781,7 +1782,7 @@ static int do_nuklear(int argc, char ** argv)
     //set_style(&ctx->nkctx, THEME_WHITE);
     //set_style(&ctx->nkctx, THEME_RED);
     //set_style(&ctx->nkctx, THEME_BLUE);
-    set_style(&ctx->nkctx, THEME_DARK);
+    //set_style(&ctx->nkctx, THEME_DARK);
 
 	while(1)
 	{
