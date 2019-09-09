@@ -8,12 +8,12 @@
  * ===============================================================*/
 NK_INTERN int nk_str_match_here(const char *regexp, const char *text);
 NK_INTERN int nk_str_match_star(int c, const char *regexp, const char *text);
-NK_LIB int nk_is_lower(int c) {return (c >= 'a' && c <= 'z') || (c >= 0xE0 && c <= 0xFF);}
-NK_LIB int nk_is_upper(int c){return (c >= 'A' && c <= 'Z') || (c >= 0xC0 && c <= 0xDF);}
-NK_LIB int nk_to_upper(int c) {return (c >= 'a' && c <= 'z') ? (c - ('a' - 'A')) : c;}
-NK_LIB int nk_to_lower(int c) {return (c >= 'A' && c <= 'Z') ? (c - ('a' + 'A')) : c;}
+ int nk_is_lower(int c) {return (c >= 'a' && c <= 'z') || (c >= 0xE0 && c <= 0xFF);}
+ int nk_is_upper(int c){return (c >= 'A' && c <= 'Z') || (c >= 0xC0 && c <= 0xDF);}
+ int nk_to_upper(int c) {return (c >= 'a' && c <= 'z') ? (c - ('a' - 'A')) : c;}
+ int nk_to_lower(int c) {return (c >= 'A' && c <= 'Z') ? (c - ('a' + 'A')) : c;}
 
-NK_LIB void*
+ void*
 nk_memcopy(void *dst0, const void *src0, nk_size length)
 {
     nk_ptr t;
@@ -69,7 +69,7 @@ nk_memcopy(void *dst0, const void *src0, nk_size length)
 done:
     return (dst0);
 }
-NK_LIB void
+ void
 nk_memset(void *ptr, int c0, nk_size size)
 {
     #define nk_word unsigned
@@ -120,13 +120,13 @@ nk_memset(void *ptr, int c0, nk_size size)
     #undef nk_wsize
     #undef nk_wmask
 }
-NK_LIB void
+ void
 nk_zero(void *ptr, nk_size size)
 {
     NK_ASSERT(ptr);
     NK_MEMSET(ptr, 0, size);
 }
-NK_API int
+ int
 nk_strlen(const char *str)
 {
     int siz = 0;
@@ -134,7 +134,7 @@ nk_strlen(const char *str)
     while (str && *str++ != '\0') siz++;
     return siz;
 }
-NK_API int
+ int
 nk_strtoi(const char *str, const char **endptr)
 {
     int neg = 1;
@@ -158,7 +158,7 @@ nk_strtoi(const char *str, const char **endptr)
         *endptr = p;
     return neg*value;
 }
-NK_API double
+ double
 nk_strtod(const char *str, const char **endptr)
 {
     double m;
@@ -215,7 +215,7 @@ nk_strtod(const char *str, const char **endptr)
         *endptr = p;
     return number;
 }
-NK_API float
+ float
 nk_strtof(const char *str, const char **endptr)
 {
     float float_value;
@@ -224,7 +224,7 @@ nk_strtof(const char *str, const char **endptr)
     float_value = (float)double_value;
     return float_value;
 }
-NK_API int
+ int
 nk_stricmp(const char *s1, const char *s2)
 {
     nk_int c1,c2,d;
@@ -246,7 +246,7 @@ nk_stricmp(const char *s1, const char *s2)
     } while (c1);
     return 0;
 }
-NK_API int
+ int
 nk_stricmpn(const char *s1, const char *s2, int n)
 {
     int c1,c2,d;
@@ -293,7 +293,7 @@ nk_str_match_star(int c, const char *regexp, const char *text)
     } while (*text != '\0' && (*text++ == c || c == '.'));
     return 0;
 }
-NK_API int
+ int
 nk_strfilter(const char *text, const char *regexp)
 {
     /*
@@ -310,7 +310,7 @@ nk_strfilter(const char *text, const char *regexp)
     } while (*text++ != '\0');
     return 0;
 }
-NK_API int
+ int
 nk_strmatch_fuzzy_text(const char *str, int str_len,
     const char *pattern, int *out_score)
 {
@@ -431,12 +431,12 @@ nk_strmatch_fuzzy_text(const char *str, int str_len,
         *out_score = score;
     return nk_true;
 }
-NK_API int
+ int
 nk_strmatch_fuzzy_string(char const *str, char const *pattern, int *out_score)
 {
     return nk_strmatch_fuzzy_text(str, nk_strlen(str), pattern, out_score);
 }
-NK_LIB int
+ int
 nk_string_float_limit(char *string, int prec)
 {
     int dot = 0;
@@ -469,7 +469,7 @@ nk_strrev_ascii(char *s)
         s[len -1 - i] = t;
     }
 }
-NK_LIB char*
+ char*
 nk_itoa(char *s, long n)
 {
     long i = 0;
@@ -493,7 +493,7 @@ nk_itoa(char *s, long n)
     nk_strrev_ascii(s);
     return s;
 }
-NK_LIB char*
+ char*
 nk_dtoa(char *s, double n)
 {
     int useExp = 0;
@@ -892,7 +892,7 @@ nk_vsnprintf(char *buf, int buf_size, const char *fmt, va_list args)
     return result;
 }
 #endif
-NK_LIB int
+ int
 nk_strfmt(char *buf, int buf_size, const char *fmt, va_list args)
 {
     int result = -1;
@@ -909,7 +909,7 @@ nk_strfmt(char *buf, int buf_size, const char *fmt, va_list args)
     return result;
 }
 #endif
-NK_API nk_hash
+ nk_hash
 nk_murmur_hash(const void * key, int len, nk_hash seed)
 {
     /* 32-Bit MurmurHash3: https://code.google.com/p/smhasher/wiki/MurmurHash3*/
@@ -974,7 +974,7 @@ nk_murmur_hash(const void * key, int len, nk_hash seed)
     return h1;
 }
 #ifdef NK_INCLUDE_STANDARD_IO
-NK_LIB char*
+ char*
 nk_file_load(const char* path, nk_size* siz, struct nk_allocator *alloc)
 {
     char *buf;
@@ -1008,7 +1008,7 @@ nk_file_load(const char* path, nk_size* siz, struct nk_allocator *alloc)
     return buf;
 }
 #endif
-NK_LIB int
+ int
 nk_text_clamp(const struct nk_user_font *font, const char *text,
     int text_len, float space, int *glyphs, float *text_width,
     nk_rune *sep_list, int sep_count)
@@ -1056,7 +1056,7 @@ nk_text_clamp(const struct nk_user_font *font, const char *text,
         return (!sep_len) ? len: sep_len;
     }
 }
-NK_LIB struct nk_vec2
+ struct nk_vec2
 nk_text_calculate_text_bounds(const struct nk_user_font *font,
     const char *begin, int byte_len, float row_height, const char **remaining,
     struct nk_vec2 *out_offset, int *glyphs, int op)

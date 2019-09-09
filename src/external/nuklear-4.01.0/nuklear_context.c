@@ -17,7 +17,7 @@ nk_setup(struct nk_context *ctx, const struct nk_user_font *font)
     if (font) ctx->style.font = font;
 }
 #ifdef NK_INCLUDE_DEFAULT_ALLOCATOR
-NK_API int
+ int
 nk_init_default(struct nk_context *ctx, const struct nk_user_font *font)
 {
     struct nk_allocator alloc;
@@ -27,7 +27,7 @@ nk_init_default(struct nk_context *ctx, const struct nk_user_font *font)
     return nk_init(ctx, &alloc, font);
 }
 #endif
-NK_API int
+ int
 nk_init_fixed(struct nk_context *ctx, void *memory, nk_size size,
     const struct nk_user_font *font)
 {
@@ -38,7 +38,7 @@ nk_init_fixed(struct nk_context *ctx, void *memory, nk_size size,
     ctx->use_pool = nk_false;
     return 1;
 }
-NK_API int
+ int
 nk_init_custom(struct nk_context *ctx, struct nk_buffer *cmds,
     struct nk_buffer *pool, const struct nk_user_font *font)
 {
@@ -59,7 +59,7 @@ nk_init_custom(struct nk_context *ctx, struct nk_buffer *cmds,
     ctx->use_pool = nk_true;
     return 1;
 }
-NK_API int
+ int
 nk_init(struct nk_context *ctx, struct nk_allocator *alloc,
     const struct nk_user_font *font)
 {
@@ -71,7 +71,7 @@ nk_init(struct nk_context *ctx, struct nk_allocator *alloc,
     ctx->use_pool = nk_true;
     return 1;
 }
-NK_API void
+ void
 nk_free(struct nk_context *ctx)
 {
     NK_ASSERT(ctx);
@@ -93,7 +93,7 @@ nk_free(struct nk_context *ctx)
     ctx->freelist = 0;
     ctx->count = 0;
 }
-NK_API void
+ void
 nk_clear(struct nk_context *ctx)
 {
     struct nk_window *iter;
@@ -159,7 +159,7 @@ nk_clear(struct nk_context *ctx)
     }
     ctx->seq++;
 }
-NK_LIB void
+ void
 nk_start_buffer(struct nk_context *ctx, struct nk_command_buffer *buffer)
 {
     NK_ASSERT(ctx);
@@ -170,14 +170,14 @@ nk_start_buffer(struct nk_context *ctx, struct nk_command_buffer *buffer)
     buffer->last = buffer->begin;
     buffer->clip = nk_null_rect;
 }
-NK_LIB void
+ void
 nk_start(struct nk_context *ctx, struct nk_window *win)
 {
     NK_ASSERT(ctx);
     NK_ASSERT(win);
     nk_start_buffer(ctx, &win->buffer);
 }
-NK_LIB void
+ void
 nk_start_popup(struct nk_context *ctx, struct nk_window *win)
 {
     struct nk_popup_buffer *buf;
@@ -193,7 +193,7 @@ nk_start_popup(struct nk_context *ctx, struct nk_window *win)
     buf->last = buf->begin;
     buf->active = nk_true;
 }
-NK_LIB void
+ void
 nk_finish_popup(struct nk_context *ctx, struct nk_window *win)
 {
     struct nk_popup_buffer *buf;
@@ -205,7 +205,7 @@ nk_finish_popup(struct nk_context *ctx, struct nk_window *win)
     buf->last = win->buffer.last;
     buf->end = win->buffer.end;
 }
-NK_LIB void
+ void
 nk_finish_buffer(struct nk_context *ctx, struct nk_command_buffer *buffer)
 {
     NK_ASSERT(ctx);
@@ -213,7 +213,7 @@ nk_finish_buffer(struct nk_context *ctx, struct nk_command_buffer *buffer)
     if (!ctx || !buffer) return;
     buffer->end = ctx->memory.allocated;
 }
-NK_LIB void
+ void
 nk_finish(struct nk_context *ctx, struct nk_window *win)
 {
     struct nk_popup_buffer *buf;
@@ -231,7 +231,7 @@ nk_finish(struct nk_context *ctx, struct nk_window *win)
     parent_last = nk_ptr_add(struct nk_command, memory, buf->parent);
     parent_last->next = buf->end;
 }
-NK_LIB void
+ void
 nk_build(struct nk_context *ctx)
 {
     struct nk_window *it = 0;
@@ -293,7 +293,7 @@ nk_build(struct nk_context *ctx)
         else cmd->next = ctx->memory.allocated;
     }
 }
-NK_API const struct nk_command*
+ const struct nk_command*
 nk__begin(struct nk_context *ctx)
 {
     struct nk_window *iter;
@@ -315,7 +315,7 @@ nk__begin(struct nk_context *ctx)
     return nk_ptr_add_const(struct nk_command, buffer, iter->buffer.begin);
 }
 
-NK_API const struct nk_command*
+ const struct nk_command*
 nk__next(struct nk_context *ctx, const struct nk_command *cmd)
 {
     nk_byte *buffer;

@@ -6,7 +6,7 @@
  *                          DRAW
  *
  * ===============================================================*/
-NK_LIB void
+ void
 nk_command_buffer_init(struct nk_command_buffer *cb,
     struct nk_buffer *b, enum nk_command_clipping clip)
 {
@@ -19,7 +19,7 @@ nk_command_buffer_init(struct nk_command_buffer *cb,
     cb->end = b->allocated;
     cb->last = b->allocated;
 }
-NK_LIB void
+ void
 nk_command_buffer_reset(struct nk_command_buffer *b)
 {
     NK_ASSERT(b);
@@ -29,7 +29,7 @@ nk_command_buffer_reset(struct nk_command_buffer *b)
     b->last = 0;
     b->clip = nk_null_rect;
 }
-NK_LIB void*
+ void*
 nk_command_buffer_push(struct nk_command_buffer* b,
     enum nk_command_type t, nk_size size)
 {
@@ -59,7 +59,7 @@ nk_command_buffer_push(struct nk_command_buffer* b,
     b->end = cmd->next;
     return cmd;
 }
-NK_API void
+ void
 nk_push_scissor(struct nk_command_buffer *b, struct nk_rect r)
 {
     struct nk_command_scissor *cmd;
@@ -79,7 +79,7 @@ nk_push_scissor(struct nk_command_buffer *b, struct nk_rect r)
     cmd->w = (unsigned short)NK_MAX(0, r.w);
     cmd->h = (unsigned short)NK_MAX(0, r.h);
 }
-NK_API void
+ void
 nk_stroke_line(struct nk_command_buffer *b, float x0, float y0,
     float x1, float y1, float line_thickness, struct nk_color c)
 {
@@ -96,7 +96,7 @@ nk_stroke_line(struct nk_command_buffer *b, float x0, float y0,
     cmd->end.y = (short)y1;
     cmd->color = c;
 }
-NK_API void
+ void
 nk_stroke_curve(struct nk_command_buffer *b, float ax, float ay,
     float ctrl0x, float ctrl0y, float ctrl1x, float ctrl1y,
     float bx, float by, float line_thickness, struct nk_color col)
@@ -119,7 +119,7 @@ nk_stroke_curve(struct nk_command_buffer *b, float ax, float ay,
     cmd->end.y = (short)by;
     cmd->color = col;
 }
-NK_API void
+ void
 nk_stroke_rect(struct nk_command_buffer *b, struct nk_rect rect,
     float rounding, float line_thickness, struct nk_color c)
 {
@@ -142,7 +142,7 @@ nk_stroke_rect(struct nk_command_buffer *b, struct nk_rect rect,
     cmd->h = (unsigned short)NK_MAX(0, rect.h);
     cmd->color = c;
 }
-NK_API void
+ void
 nk_fill_rect(struct nk_command_buffer *b, struct nk_rect rect,
     float rounding, struct nk_color c)
 {
@@ -165,7 +165,7 @@ nk_fill_rect(struct nk_command_buffer *b, struct nk_rect rect,
     cmd->h = (unsigned short)NK_MAX(0, rect.h);
     cmd->color = c;
 }
-NK_API void
+ void
 nk_fill_rect_multi_color(struct nk_command_buffer *b, struct nk_rect rect,
     struct nk_color left, struct nk_color top, struct nk_color right,
     struct nk_color bottom)
@@ -191,7 +191,7 @@ nk_fill_rect_multi_color(struct nk_command_buffer *b, struct nk_rect rect,
     cmd->right = right;
     cmd->bottom = bottom;
 }
-NK_API void
+ void
 nk_stroke_circle(struct nk_command_buffer *b, struct nk_rect r,
     float line_thickness, struct nk_color c)
 {
@@ -213,7 +213,7 @@ nk_stroke_circle(struct nk_command_buffer *b, struct nk_rect r,
     cmd->h = (unsigned short)NK_MAX(r.h, 0);
     cmd->color = c;
 }
-NK_API void
+ void
 nk_fill_circle(struct nk_command_buffer *b, struct nk_rect r, struct nk_color c)
 {
     struct nk_command_circle_filled *cmd;
@@ -234,7 +234,7 @@ nk_fill_circle(struct nk_command_buffer *b, struct nk_rect r, struct nk_color c)
     cmd->h = (unsigned short)NK_MAX(r.h, 0);
     cmd->color = c;
 }
-NK_API void
+ void
 nk_stroke_arc(struct nk_command_buffer *b, float cx, float cy, float radius,
     float a_min, float a_max, float line_thickness, struct nk_color c)
 {
@@ -251,7 +251,7 @@ nk_stroke_arc(struct nk_command_buffer *b, float cx, float cy, float radius,
     cmd->a[1] = a_max;
     cmd->color = c;
 }
-NK_API void
+ void
 nk_fill_arc(struct nk_command_buffer *b, float cx, float cy, float radius,
     float a_min, float a_max, struct nk_color c)
 {
@@ -268,7 +268,7 @@ nk_fill_arc(struct nk_command_buffer *b, float cx, float cy, float radius,
     cmd->a[1] = a_max;
     cmd->color = c;
 }
-NK_API void
+ void
 nk_stroke_triangle(struct nk_command_buffer *b, float x0, float y0, float x1,
     float y1, float x2, float y2, float line_thickness, struct nk_color c)
 {
@@ -295,7 +295,7 @@ nk_stroke_triangle(struct nk_command_buffer *b, float x0, float y0, float x1,
     cmd->c.y = (short)y2;
     cmd->color = c;
 }
-NK_API void
+ void
 nk_fill_triangle(struct nk_command_buffer *b, float x0, float y0, float x1,
     float y1, float x2, float y2, struct nk_color c)
 {
@@ -322,7 +322,7 @@ nk_fill_triangle(struct nk_command_buffer *b, float x0, float y0, float x1,
     cmd->c.y = (short)y2;
     cmd->color = c;
 }
-NK_API void
+ void
 nk_stroke_polygon(struct nk_command_buffer *b,  float *points, int point_count,
     float line_thickness, struct nk_color col)
 {
@@ -343,7 +343,7 @@ nk_stroke_polygon(struct nk_command_buffer *b,  float *points, int point_count,
         cmd->points[i].y = (short)points[i*2+1];
     }
 }
-NK_API void
+ void
 nk_fill_polygon(struct nk_command_buffer *b, float *points, int point_count,
     struct nk_color col)
 {
@@ -364,7 +364,7 @@ nk_fill_polygon(struct nk_command_buffer *b, float *points, int point_count,
         cmd->points[i].y = (short)points[i*2+1];
     }
 }
-NK_API void
+ void
 nk_stroke_polyline(struct nk_command_buffer *b, float *points, int point_count,
     float line_thickness, struct nk_color col)
 {
@@ -385,7 +385,7 @@ nk_stroke_polyline(struct nk_command_buffer *b, float *points, int point_count,
         cmd->points[i].y = (short)points[i*2+1];
     }
 }
-NK_API void
+ void
 nk_draw_image(struct nk_command_buffer *b, struct nk_rect r,
     const struct nk_image *img, struct nk_color col)
 {
@@ -408,7 +408,7 @@ nk_draw_image(struct nk_command_buffer *b, struct nk_rect r,
     cmd->img = *img;
     cmd->col = col;
 }
-NK_API void
+ void
 nk_push_custom(struct nk_command_buffer *b, struct nk_rect r,
     nk_command_custom_callback cb, nk_handle usr)
 {
@@ -431,7 +431,7 @@ nk_push_custom(struct nk_command_buffer *b, struct nk_rect r,
     cmd->callback_data = usr;
     cmd->callback = cb;
 }
-NK_API void
+ void
 nk_draw_text(struct nk_command_buffer *b, struct nk_rect r,
     const char *string, int length, const struct nk_user_font *font,
     struct nk_color bg, struct nk_color fg)

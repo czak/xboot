@@ -33,7 +33,7 @@
     (it can actually approximate a lot more functions) can be
     found here: www.lolengine.net/wiki/oss/lolremez
 */
-NK_LIB float
+ float
 nk_inv_sqrt(float n)
 {
     float x2;
@@ -45,12 +45,12 @@ nk_inv_sqrt(float n)
     conv.f = conv.f * (threehalfs - (x2 * conv.f * conv.f));
     return conv.f;
 }
-NK_LIB float
+ float
 nk_sqrt(float x)
 {
     return x * nk_inv_sqrt(x);
 }
-NK_LIB float
+ float
 nk_sin(float x)
 {
     NK_STORAGE const float a0 = +1.91059300966915117e-31f;
@@ -63,7 +63,7 @@ nk_sin(float x)
     NK_STORAGE const float a7 = +1.38235642404333740e-4f;
     return a0 + x*(a1 + x*(a2 + x*(a3 + x*(a4 + x*(a5 + x*(a6 + x*a7))))));
 }
-NK_LIB float
+ float
 nk_cos(float x)
 {
     NK_STORAGE const float a0 = +1.00238601909309722f;
@@ -76,7 +76,7 @@ nk_cos(float x)
     NK_STORAGE const float a7 = -5.23022132118824778e-14f;
     return a0 + x*(a1 + x*(a2 + x*(a3 + x*(a4 + x*(a5 + x*(a6 + x*a7))))));
 }
-NK_LIB nk_uint
+ nk_uint
 nk_round_up_pow2(nk_uint v)
 {
     v--;
@@ -88,7 +88,7 @@ nk_round_up_pow2(nk_uint v)
     v++;
     return v;
 }
-NK_LIB double
+ double
 nk_pow(double x, int n)
 {
     /*  check the sign of n */
@@ -103,19 +103,19 @@ nk_pow(double x, int n)
     }
     return plus ? r : 1.0 / r;
 }
-NK_LIB int
+ int
 nk_ifloord(double x)
 {
     x = (double)((int)x - ((x < 0.0) ? 1 : 0));
     return (int)x;
 }
-NK_LIB int
+ int
 nk_ifloorf(float x)
 {
     x = (float)((int)x - ((x < 0.0f) ? 1 : 0));
     return (int)x;
 }
-NK_LIB int
+ int
 nk_iceilf(float x)
 {
     if (x >= 0) {
@@ -127,7 +127,7 @@ nk_iceilf(float x)
         return (r > 0.0f) ? t+1: t;
     }
 }
-NK_LIB int
+ int
 nk_log10(double n)
 {
     int neg;
@@ -143,12 +143,12 @@ nk_log10(double n)
     if (neg) exp = -exp;
     return exp;
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_get_null_rect(void)
 {
     return nk_null_rect;
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_rect(float x, float y, float w, float h)
 {
     struct nk_rect r;
@@ -156,7 +156,7 @@ nk_rect(float x, float y, float w, float h)
     r.w = w; r.h = h;
     return r;
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_recti(int x, int y, int w, int h)
 {
     struct nk_rect r;
@@ -166,36 +166,36 @@ nk_recti(int x, int y, int w, int h)
     r.h = (float)h;
     return r;
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_recta(struct nk_vec2 pos, struct nk_vec2 size)
 {
     return nk_rect(pos.x, pos.y, size.x, size.y);
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_rectv(const float *r)
 {
     return nk_rect(r[0], r[1], r[2], r[3]);
 }
-NK_API struct nk_rect
+ struct nk_rect
 nk_rectiv(const int *r)
 {
     return nk_recti(r[0], r[1], r[2], r[3]);
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_rect_pos(struct nk_rect r)
 {
     struct nk_vec2 ret;
     ret.x = r.x; ret.y = r.y;
     return ret;
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_rect_size(struct nk_rect r)
 {
     struct nk_vec2 ret;
     ret.x = r.w; ret.y = r.h;
     return ret;
 }
-NK_LIB struct nk_rect
+ struct nk_rect
 nk_shrink_rect(struct nk_rect r, float amount)
 {
     struct nk_rect res;
@@ -207,7 +207,7 @@ nk_shrink_rect(struct nk_rect r, float amount)
     res.h = r.h - 2 * amount;
     return res;
 }
-NK_LIB struct nk_rect
+ struct nk_rect
 nk_pad_rect(struct nk_rect r, struct nk_vec2 pad)
 {
     r.w = NK_MAX(r.w, 2 * pad.x);
@@ -217,14 +217,14 @@ nk_pad_rect(struct nk_rect r, struct nk_vec2 pad)
     r.h -= 2 * pad.y;
     return r;
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_vec2(float x, float y)
 {
     struct nk_vec2 ret;
     ret.x = x; ret.y = y;
     return ret;
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_vec2i(int x, int y)
 {
     struct nk_vec2 ret;
@@ -232,17 +232,17 @@ nk_vec2i(int x, int y)
     ret.y = (float)y;
     return ret;
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_vec2v(const float *v)
 {
     return nk_vec2(v[0], v[1]);
 }
-NK_API struct nk_vec2
+ struct nk_vec2
 nk_vec2iv(const int *v)
 {
     return nk_vec2i(v[0], v[1]);
 }
-NK_LIB void
+ void
 nk_unify(struct nk_rect *clip, const struct nk_rect *a, float x0, float y0,
     float x1, float y1)
 {
@@ -256,7 +256,7 @@ nk_unify(struct nk_rect *clip, const struct nk_rect *a, float x0, float y0,
     clip->h = NK_MAX(0, clip->h);
 }
 
-NK_API void
+ void
 nk_triangle_from_direction(struct nk_vec2 *result, struct nk_rect r,
     float pad_x, float pad_y, enum nk_heading direction)
 {
