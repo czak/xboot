@@ -174,8 +174,111 @@ void render_default_fill(struct surface_t * s, struct region_t * clip, struct ma
 	}
 }
 
+static inline void shape_set_pixel(struct surface_t * s, int x, int y, uint32_t v)
+{
+	uint32_t * p = (uint32_t *)s->pixels + y * (s->stride >> 2) + x;
+	*p = v;
+}
+
+static inline void shape_hline(struct surface_t * s, int x0, int y0, int x, uint32_t v)
+{
+	uint32_t * p = (uint32_t *)s->pixels + y0 * (s->stride >> 2) + x0;
+	int i;
+	for(i = 0; i < x; i++)
+		*p++ = v;
+}
+
+static inline void shape_line(struct surface_t * s, int x0, int y0, int x1, int y1, uint32_t v)
+{
+	int dx = x1 - x0;
+	int dy = y1 - y0;
+	int stepx, stepy;
+	int fraction;
+
+	if(dy == 0)
+	{
+		if(dx > 0)
+		{
+			shape_hline(s, x0, y0, dx, v);
+		}
+		else if(dx < 0)
+		{
+			shape_hline(s, x1, y0, -dx, v);
+		}
+	}
+	else
+	{
+		if(dy < 0)
+		{
+			dy = -dy;
+			stepy = -1;
+		}
+		else
+		{
+			stepy = 1;
+		}
+		if(dx < 0)
+		{
+			dx = -dx;
+			stepx = -1;
+		}
+		else
+		{
+			stepx = 1;
+		}
+		dy <<= 1;
+		dx <<= 1;
+		shape_set_pixel(s, x0, y0, v);
+		if(dx > dy)
+		{
+			fraction = dy - (dx >> 1);
+			while(x0 != x1)
+			{
+				if(fraction >= 0)
+				{
+					y0 += stepy;
+					fraction -= dx;
+				}
+				x0 += stepx;
+				fraction += dy;
+				shape_set_pixel(s, x0, y0, v);
+			}
+		}
+		else
+		{
+			fraction = dx - (dy >> 1);
+			while(y0 != y1)
+			{
+				if(fraction >= 0)
+				{
+					x0 += stepx;
+					fraction -= dy;
+				}
+				y0 += stepy;
+				fraction += dx;
+				shape_set_pixel(s, x0, y0, v);
+			}
+		}
+	}
+}
+
 void render_default_shape_line(struct surface_t * s, struct region_t * clip, struct point_t * p0, struct point_t * p1, int thickness, struct color_t * c)
 {
+	struct region_t r;
+	int x0, y0, x1, y1;
+
+	region_init(&r, 0, 0, surface_get_width(s), surface_get_height(s));
+	if(clip)
+	{
+		if(!region_intersect(&r, &r, clip))
+			return;
+	}
+	x0 = p0->x;
+	y0 = p0->y;
+	x1 = p1->x;
+	y1 = p1->y;
+	if(region_clip_line(&r, &x0, &y0, &x1, &y1))
+		shape_line(s, x0, y0, x1, y1, color_get_premult(c));
 }
 
 void render_default_shape_polyline(struct surface_t * s, struct region_t * clip, struct point_t * p, int n, int thickness, struct color_t * c)
