@@ -80,24 +80,6 @@ void mmu_setup(void)
 	map_l1_section((virtual_addr_t)&__dma_start, (physical_addr_t)&__dma_start, (physical_size_t)(&__dma_end - &__dma_start), MAP_TYPE_NCNB);
 }
 
-static inline void arm32_ttb_set(uint32_t base)
-{
-    __asm__ __volatile__(
-        "mcr p15, 0, %0, c2, c0, 0"
-        :
-        : "r" (base)
-        : "memory");
-}
-
-static inline void arm32_domain_set(uint32_t domain)
-{
-    __asm__ __volatile__(
-        "mcr p15, 0, %0, c3, c0, 0"
-        :
-        : "r" (domain)
-        : "memory");
-}
-
 static inline void arm32_tlb_invalidate(void)
 {
     __asm__ __volatile__(
@@ -112,15 +94,13 @@ static inline void arm32_tlb_invalidate(void)
 
 void mmu_enable(void)
 {
-  arm32_ttb_set((uint32_t)(__mmu_ttb));
+	mmu_ttb_set((uint32_t)(__mmu_ttb));
   arm32_tlb_invalidate();
-  arm32_domain_set(0x3);
-	/* mmu_ttb_set((uint32_t)(__mmu_ttb)); */
+	mmu_domain_set(0x3);
 	/* cache_inv_range(0, ~0); */
 	/* outer_cache_enable(); */
 	/* outer_cache_inv_range(0, ~0); */
 	/* mmu_inv_tlb(); */
-	/* mmu_domain_set(0x3); */
 	arm32_mmu_enable();
 	arm32_icache_enable();
 	arm32_dcache_enable();
