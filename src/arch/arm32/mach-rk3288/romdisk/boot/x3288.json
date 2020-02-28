@@ -439,60 +439,6 @@
 		"stop-bits": 1
 	},
 
-	"i2c-rk3288@0xff650000": {
-		"clock-name": "link-pclk-i2c0",
-		"clock-frequency": 400000,
-		"sda-gpio": 15,
-		"sda-gpio-config": 1,
-		"scl-gpio": 16,
-		"scl-gpio-config": 1
-	},
-
-	"i2c-rk3288@0xff660000": {
-		"clock-name": "link-pclk-i2c1",
-		"clock-frequency": 400000,
-		"sda-gpio": 260,
-		"sda-gpio-config": 1,
-		"scl-gpio": 261,
-		"scl-gpio-config": 1
-	},
-
-	"i2c-rk3288@0xff140000": {
-		"clock-name": "link-pclk-i2c2",
-		"clock-frequency": 400000,
-		"sda-gpio": 201,
-		"sda-gpio-config": 1,
-		"scl-gpio": 202,
-		"scl-gpio-config": 1
-	},
-
-	"i2c-rk3288@0xff150000": {
-		"clock-name": "link-pclk-i2c3",
-		"clock-frequency": 400000,
-		"sda-gpio": 80,
-		"sda-gpio-config": 1,
-		"scl-gpio": 81,
-		"scl-gpio-config": 1
-	},
-
-	"i2c-rk3288@0xff160000": {
-		"clock-name": "link-pclk-i2c4",
-		"clock-frequency": 400000,
-		"sda-gpio": 241,
-		"sda-gpio-config": 1,
-		"scl-gpio": 242,
-		"scl-gpio-config": 1
-	},
-
-	"i2c-rk3288@0xff170000": {
-		"clock-name": "link-pclk-i2c5",
-		"clock-frequency": 400000,
-		"sda-gpio": 243,
-		"sda-gpio-config": 1,
-		"scl-gpio": 244,
-		"scl-gpio-config": 1
-	},
-
 	"spi-rk3288@0xff110000": {
 		"clock-name": "link-spi0",
 		"sclk-gpio": 172,
