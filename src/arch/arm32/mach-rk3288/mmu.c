@@ -82,12 +82,12 @@ void mmu_setup(void)
 
 void mmu_enable(void)
 {
-	mmu_ttb_set((uint32_t)(__mmu_ttb));
-	cache_inv_range(0, ~0);
-	outer_cache_enable();
-	outer_cache_inv_range(0, ~0);
-	mmu_inv_tlb();
-	mmu_domain_set(0x3);
+	/* mmu_ttb_set((uint32_t)(__mmu_ttb)); */
+	/* cache_inv_range(0, ~0); */
+	/* outer_cache_enable(); */
+	/* outer_cache_inv_range(0, ~0); */
+	/* mmu_inv_tlb(); */
+	/* mmu_domain_set(0x3); */
 	arm32_mmu_enable();
 	arm32_icache_enable();
 	arm32_dcache_enable();
