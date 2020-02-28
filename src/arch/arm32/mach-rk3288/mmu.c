@@ -56,6 +56,19 @@ static inline void mmu_inv_tlb(void)
 	isb();
 }
 
+// This is the old version, doesn't halt
+static inline void arm32_tlb_invalidate(void)
+{
+	__asm__ __volatile__(
+			"mov r0, #0\n"
+			"mcr p15, 0, r0, c7, c10, 4\n"
+			"mcr p15, 0, r0, c8, c6, 0\n"
+			"mcr p15, 0, r0, c8, c5, 0\n"
+			:
+			:
+			: "r0");
+}
+
 static void map_l1_section(virtual_addr_t virt, physical_addr_t phys, physical_size_t size, int type)
 {
 	physical_size_t i;
@@ -86,7 +99,8 @@ void mmu_enable(void)
 	cache_inv_range(0, ~0);
 	outer_cache_enable();
 	outer_cache_inv_range(0, ~0);
-	mmu_inv_tlb();
+	/* mmu_inv_tlb(); */
+	arm32_tlb_invalidate();
 	mmu_domain_set(0x3);
 	arm32_mmu_enable();
 	arm32_icache_enable();
